@@ -43,7 +43,7 @@ describe("Marc21RecordSerializer tests", () => {
         const serializedRecord = serializer.serialize(record);
 
         expect(serializedRecord.metadata).toMatch(
-          '<datafield tag="100" ind1="1" ind2=" ">'
+          '<datafield tag="100" ind1="1" ind2="_">'
         );
         expect(serializedRecord.metadata).toMatch(
           '<subfield code="a">Hallo</subfield>'
