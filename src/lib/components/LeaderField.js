@@ -17,7 +17,7 @@ export class LeaderField extends Component {
     return (
       <>
         <TextField value={"LDR"} width={2} />
-        <TextField fieldPath={`${fieldPath}`} width={14} required maxLength={24} />
+        <TextField fieldPath={`${fieldPath}`} width={15} required maxLength={24} />
       </>
     );
   }

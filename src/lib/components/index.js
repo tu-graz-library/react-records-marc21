@@ -10,6 +10,4 @@ export { AccordionField } from "./AccordionField";
 export { MetadataFields } from "./MetadataFields";
 export { MetadataField } from "./MetadataField";
 export { LeaderField } from "./LeaderField";
-export { SaveButton } from "./SaveButton";
-export { PublishButton } from "./PublishButton";
 export { TemplateField } from "./TemplateField";

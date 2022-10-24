@@ -6,7 +6,7 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
-import React, { Component, StrictMode } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Icon } from "semantic-ui-react";
 import { ArrayField, GroupField } from "react-invenio-forms";
@@ -17,7 +17,7 @@ export class MetadataFields extends Component {
   render() {
     const { fieldPath } = this.props;
     return (
-      <StrictMode>
+      <>
         <GroupField fieldPath={`${fieldPath}.leader`}>
           <LeaderField fieldPath={`${fieldPath}.leader`} />
         </GroupField>
@@ -41,7 +41,7 @@ export class MetadataFields extends Component {
             );
           }}
         </ArrayField>
-      </StrictMode>
+      </>
     );
   }
 }

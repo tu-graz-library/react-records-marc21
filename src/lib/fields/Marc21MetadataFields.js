@@ -11,6 +11,7 @@ import { get, set, has, pick, cloneDeep } from "lodash";
 import { Field } from "./Field";
 
 export class Marc21MetadataFields extends Field {
+  controlfields = ["001", "003", "005", "006", "007", "008", "009"];
   constructor({ fieldpath, deserializedDefault = [], serializedDefault = [] }) {
     super({ fieldpath, deserializedDefault, serializedDefault });
   }
@@ -70,11 +71,15 @@ export class Marc21MetadataFields extends Field {
     for (const field of Object.values(fields)) {
       const key = Object.keys(field)[0];
       const value = Object.values(field)[0];
+      let subfields = value;
+      if (!this.controlfields.includes(key)) {
+        subfields = Marc21MetadataFields._deserialize_subfields(value["subfields"]);
+      }
       let internal = {
         id: key,
         ind1: value["ind1"],
         ind2: value["ind2"],
-        subfield: Marc21MetadataFields._deserialize_subfields(value["subfields"]),
+        subfield: subfields,
       };
       metadata.push(internal);
     }
@@ -122,8 +127,13 @@ export class Marc21MetadataFields extends Field {
   _serialize_fields(marc_record, fields) {
     let metadata = [];
     for (const field of Object.values(fields)) {
-      const subfields = Marc21MetadataFields._serialize_subfields(field["subfield"]);
-      let internal = [field["id"], field["ind1"] + field["ind2"]].concat(subfields);
+      let subfields = field["subfield"];
+      if (!this.controlfields.includes(field["id"])) {
+        subfields = Marc21MetadataFields._serialize_subfields(field["subfield"]);
+      }
+      let ind1 = field["ind1"].replace(" ", "_");
+      let ind2 = field["ind2"].replace(" ", "_");
+      let internal = [field["id"], ind1 + ind2].concat(subfields);
 
       marc_record.append(internal);
     }

@@ -7,6 +7,4 @@
 // details.
 
 export * from "./components";
-export { Marc21DepositApp } from "./Marc21DepositApp";
-export * from "./dom";
 export { Marc21RecordSerializer } from "./Marc21RecordSerializer";

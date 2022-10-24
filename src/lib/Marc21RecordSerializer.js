@@ -6,11 +6,15 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
+import { DepositRecordSerializer } from "react-invenio-deposit";
 import { cloneDeep, defaults, pick, set } from "lodash";
 import { Field, Marc21MetadataFields } from "./fields";
 
-export class Marc21RecordSerializer {
-  constructor() {}
+export class Marc21RecordSerializer extends DepositRecordSerializer {
+  constructor(defaultLocale) {
+    super();
+    this.defaultLocale = defaultLocale;
+  }
 
   depositRecordSchema = {
     access: new Field({
@@ -26,6 +30,9 @@ export class Marc21RecordSerializer {
     links: new Field({
       fieldpath: "links",
     }),
+    parent: new Field({
+      fieldpath: "parent",
+    }),
     pids: new Field({
       fieldpath: "pids",
       deserializedDefault: {},
@@ -33,8 +40,7 @@ export class Marc21RecordSerializer {
     }),
     metadata: new Marc21MetadataFields({
       fieldpath: "metadata",
-      deserializedDefault:
-        "<record> <leader>00000nam a2200000zca4500</leader></record>",
+      deserializedDefault: { leader: "00000nam a2200000zca4500", fields: [] },
       serializedDefault: "",
     }),
   };
@@ -51,12 +57,16 @@ export class Marc21RecordSerializer {
     let deserializedRecord = record;
     deserializedRecord = pick(deserializedRecord, [
       "access",
+      "expanded",
       "metadata",
       "id",
       "links",
       "files",
-      "pids",
+      "is_published",
+      "versions",
       "parent",
+      "status",
+      "pids",
     ]);
     for (let key in this.depositRecordSchema) {
       deserializedRecord =

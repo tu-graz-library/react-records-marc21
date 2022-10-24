@@ -16,9 +16,9 @@ export class MetadataField extends Component {
     const { fieldPath } = this.props;
     return (
       <>
-        <TextField fieldPath={`${fieldPath}.id`} width={3} required />
-        <TextField fieldPath={`${fieldPath}.ind1`} width={2} />
-        <TextField fieldPath={`${fieldPath}.ind2`} width={2} />
+        <TextField fieldPath={`${fieldPath}.id`} width={2} required maxLength={3} />
+        <TextField fieldPath={`${fieldPath}.ind1`} width={1} maxLength={1} />
+        <TextField fieldPath={`${fieldPath}.ind2`} width={1} maxLength={1} />
         <TextField fieldPath={`${fieldPath}.subfield`} width={15} required />
       </>
     );
@@ -26,7 +26,7 @@ export class MetadataField extends Component {
 }
 
 MetadataField.propTypes = {
-  fieldPath: PropTypes.number.isRequired,
+  fieldPath: PropTypes.string.isRequired,
   width: PropTypes.number,
   helpText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
