@@ -1,7 +1,7 @@
 # This file is part of Invenio.
-# 
+#
 #  Copyright (C) 2022 Graz University of Technology.
-# 
+#
 # React-Records-Marc21 is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
 # details.
@@ -10,13 +10,12 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   Tests:
-
     runs-on: ubuntu-20.04
 
     strategy:
@@ -24,21 +23,21 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install & Build
-      run: |
-        npm install
-        npm run build
-  
-    - name: Test
-      run: npm test
+      - name: Install & Build
+        run: |
+          npm install
+          npm run build
 
-    - name: Check Format
-      run: npm run check-format
+      - name: Test
+        run: npm test
+
+      - name: Check Format
+        run: npm run check-format

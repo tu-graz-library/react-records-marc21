@@ -14,6 +14,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
   constructor(defaultLocale) {
     super();
     this.defaultLocale = defaultLocale;
+    this.current_record = {};
   }
 
   depositRecordSchema = {
@@ -77,6 +78,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
         delete deserializedRecord["id"];
       }
     }
+    this.current_record = deserializedRecord;
     return deserializedRecord;
   }
 
@@ -89,6 +91,14 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
   deserializeErrors(errors) {
     let deserializedErrors = {};
     for (let e of errors) {
+      keys = e.field.split(".");
+      if (keys[0] == "metadata") {
+        if (keys[1] == "fields") {
+          fields = get(this.current_record, "metadata.fields");
+          for (let key in fields) {
+          }
+        }
+      }
       set(deserializedErrors, e.field, e.messages.join(" "));
     }
 
