@@ -10,8 +10,7 @@
   ],
   "config": {
     "languages": [
-      "en",
-      "de"
+      "en"
     ]
   },
   "scripts": {
@@ -34,12 +33,14 @@
     "check-format": "prettier --config ./.prettierrc --ignore-path ./.prettierignore  -c \"src/**/*.js\""
   },
   "dependencies": {
+    "prismjs": "^1.20.0",
     "marcjs": "^2.0.1",
-    "prismjs": "^1.20.0"
+    "react-invenio-deposit": "^1.0.2"
   },
   "peerDependencies": {
-    "marcjs": "^2.0.1",
     "@babel/runtime": "^7.9.0",
+    "@ckeditor/ckeditor5-build-classic": "^16.0.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@semantic-ui-react/css-patch": "^1.0.0",
     "axios": "^0.21.0",
     "formik": "^2.1.0",
@@ -47,23 +48,28 @@
     "i18next-browser-languagedetector": "^6.1.0",
     "lodash": "^4.17.0",
     "luxon": "^1.23.0",
+    "marcjs": "^2.0.1",
     "react": "^16.13.0",
     "react-dnd": "^11.1.0",
     "react-dnd-html5-backend": "^11.1.0",
     "react-dom": "^16.13.0",
     "react-dropzone": "^11.0.0",
     "react-i18next": "^11.11.0",
-    "react-invenio-forms": "^0.10.0",
+    "react-invenio-forms": "^1.0.0",
     "react-overridable": "^0.0.3",
     "react-redux": "^7.2.0",
     "react-searchkit": "^2.0.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.0",
-    "semantic-ui-react": "^2.1.0"
+    "semantic-ui-react": "^2.1.0",
+    "yup": "^0.32.11",
+    "query-string": "^7.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
+    "@ckeditor/ckeditor5-build-classic": "^16.0.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@inveniosoftware/eslint-config-invenio": "^1.0.0",
     "@rollup/plugin-alias": "^3.1.0",
     "@rollup/plugin-babel": "^5.0.0",
@@ -75,6 +81,7 @@
     "@testing-library/jest-dom": "^4.2.0",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.0",
+    "query-string": "^7.1.1",
     "axios": "^0.21.0",
     "coveralls": "^3.0.0",
     "enzyme": "^3.10.0",
@@ -91,12 +98,13 @@
     "marcjs": "^2.0.1",
     "prettier": "^2.0.0",
     "react": "^16.13.0",
+    "react-dropzone": "^11.0.0",
     "react-dnd": "^11.1.0",
     "react-dnd-html5-backend": "^11.1.0",
     "react-dom": "^16.13.0",
     "react-i18next": "^11.11.0",
-    "react-invenio-forms": "^0.10.7",
-    "react-invenio-deposit": "^0.19.5",
+    "react-invenio-deposit": "^1.0.2",
+    "react-invenio-forms": "^1.0.0",
     "react-overridable": "^0.0.3",
     "react-redux": "^7.2.0",
     "react-scripts": "^5.0.1",
