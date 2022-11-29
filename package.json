@@ -1,6 +1,6 @@
 {
   "name": "react-records-marc21",
-  "version": "0.1.1",
+	"version": "0.2.0",
   "description": "React components to build marc21 pages in Invenio",
   "main": "dist/cjs/index.js",
   "browser": "dist/cjs/index.js",
