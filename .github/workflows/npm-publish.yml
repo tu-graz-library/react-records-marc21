@@ -42,7 +42,7 @@ jobs:
 
       - name: Check Commit Message
         run: |
-          if [[ ! "${{ steps.vars.outputs.message_text }}" =~ ^Release[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          if [[ ! "${{ steps.vars.outputs.message_text }}" =~ ^release[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+$ ]]
           then
               echo "Publish failed: Commit message not conform (Release v[0-9]+\.[0-9]+\.[0-9]+)!!!"
               exit 1
@@ -50,7 +50,7 @@ jobs:
 
       - name: Check Commit Version
         run: |
-          if [[ ! "${{ steps.vars.outputs.message_text }}" == "Release ${{ steps.vars.outputs.tag_text }}" ]]
+          if [[ ! "${{ steps.vars.outputs.message_text }}" == "release ${{ steps.vars.outputs.tag_text }}" ]]
           then
               echo "Publish failed: Commit version not match!!!"
               echo "Tag: ${{ steps.vars.outputs.tag_text }} Message: ${{ steps.vars.outputs.message_text }}"
