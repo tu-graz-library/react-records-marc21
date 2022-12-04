@@ -11,74 +11,9 @@ name: Publish
 on:
   push:
     tags:
-      - "*"
+      - v*
 
 jobs:
-  Publish:
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Extract Variables
-        id: vars
-        run: |
-          echo "::set-output name=tag_text::${GITHUB_REF#refs/*/}"
-          echo "::set-output name=package_name::${GITHUB_REPOSITORY#*/}"
-          echo "::set-output name=message_text::${{ github.event.head_commit.message }}"
-
-      - name: Extract Package version
-        id: extract_version
-        uses: Saionaro/extract-package-version@v1.0.6
-
-      - name: Check Tag Name
-        run: |
-          if [[ ! "${{ steps.vars.outputs.tag_text }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          then
-              echo "Tag does not follow following convention (v[0-9]+\.[0-9]+\.[0-9]+)!!!"
-              exit 1
-          fi
-
-      - name: Check Commit Message
-        run: |
-          if [[ ! "${{ steps.vars.outputs.message_text }}" =~ ^release[[:space:]]v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          then
-              echo "Publish failed: Commit message not conform (Release v[0-9]+\.[0-9]+\.[0-9]+)!!!"
-              exit 1
-          fi
-
-      - name: Check Commit Version
-        run: |
-          if [[ ! "${{ steps.vars.outputs.message_text }}" == "release ${{ steps.vars.outputs.tag_text }}" ]]
-          then
-              echo "Publish failed: Commit version not match!!!"
-              echo "Tag: ${{ steps.vars.outputs.tag_text }} Message: ${{ steps.vars.outputs.message_text }}"
-              exit 1
-
-          fi
-
-      - name: Check Package Version
-        run: |
-          if [[ ! "v${{ steps.extract_version.outputs.version }}" == "${{ steps.vars.outputs.tag_text }}" ]]
-          then
-              echo "Publish failed: Package version not match!!!"
-              echo "Package version: ${{ steps.extract_version.outputs.version }} Tag version: ${{ steps.vars.outputs.tag_text }}"
-              exit 1
-          fi
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
-
-      - name: Publish on NPM
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+  npm-publish-workflow:
+    uses: tu-graz-library/.github/.github/workflows/npm-publish.yml@main
+    secrets: inherit
