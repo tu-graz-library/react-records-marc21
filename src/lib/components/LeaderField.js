@@ -16,8 +16,20 @@ export class LeaderField extends Component {
     const { fieldPath } = this.props;
     return (
       <>
-        <TextField value={"LDR"} width={2} />
-        <TextField fieldPath={`${fieldPath}`} width={15} required maxLength={24} />
+        <TextField
+          fieldPath={`ldr`}
+          value={"LDR"}
+          width={3}
+          className={["key", "narrow"]}
+          disabled
+        />
+        <TextField
+          fieldPath={`${fieldPath}`}
+          width={15}
+          required
+          maxLength={24}
+          className={"narrow"}
+        />
       </>
     );
   }

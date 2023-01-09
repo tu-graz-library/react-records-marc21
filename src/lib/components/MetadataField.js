@@ -16,10 +16,31 @@ export class MetadataField extends Component {
     const { fieldPath } = this.props;
     return (
       <>
-        <TextField fieldPath={`${fieldPath}.id`} width={2} required maxLength={3} />
-        <TextField fieldPath={`${fieldPath}.ind1`} width={1} maxLength={1} />
-        <TextField fieldPath={`${fieldPath}.ind2`} width={1} maxLength={1} />
-        <TextField fieldPath={`${fieldPath}.subfield`} width={15} required />
+        <TextField
+          fieldPath={`${fieldPath}.id`}
+          width={2}
+          required
+          maxLength={3}
+          className={["key", "narrow"]}
+        />
+        <TextField
+          fieldPath={`${fieldPath}.ind1`}
+          width={1}
+          maxLength={1}
+          className={["ind1", "narrow"]}
+        />
+        <TextField
+          fieldPath={`${fieldPath}.ind2`}
+          width={1}
+          maxLength={1}
+          className={["ind2", "narrow"]}
+        />
+        <TextField
+          fieldPath={`${fieldPath}.subfield`}
+          width={15}
+          required
+          className={"narrow"}
+        />
       </>
     );
   }

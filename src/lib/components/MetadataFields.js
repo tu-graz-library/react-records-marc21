@@ -18,7 +18,7 @@ export class MetadataFields extends Component {
     const { fieldPath } = this.props;
     return (
       <>
-        <GroupField fieldPath={`${fieldPath}.leader`}>
+        <GroupField fieldPath={`${fieldPath}.leader`} className={"leader"}>
           <LeaderField fieldPath={`${fieldPath}.leader`} />
         </GroupField>
         <ArrayField
