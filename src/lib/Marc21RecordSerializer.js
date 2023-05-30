@@ -1,13 +1,17 @@
 // This file is part of Invenio.
 //
-// Copyright (C) 2021-2022 Graz University of Technology.
+// Copyright (C) 2021-2023 Graz University of Technology.
 //
 // React-Records-Marc21 is free software; you can redistribute it and/or
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
+import _cloneDeep from "lodash/cloneDeep";
+import _defaults from "lodash/defaults";
+import _pick from "lodash/pick";
+import _set from "lodash/set";
+import _get from "lodash/get";
 import { DepositRecordSerializer } from "react-invenio-deposit";
-import { cloneDeep, defaults, pick, set } from "lodash";
 import { Field, Marc21MetadataFields } from "./fields";
 
 export class Marc21RecordSerializer extends DepositRecordSerializer {
@@ -53,10 +57,10 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
    * @returns {object} frontend compatible record object
    */
   deserialize(record) {
-    record = cloneDeep(record);
+    record = _cloneDeep(record);
 
     let deserializedRecord = record;
-    deserializedRecord = pick(deserializedRecord, [
+    deserializedRecord = _pick(deserializedRecord, [
       "access",
       "expanded",
       "metadata",
@@ -73,11 +77,7 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
       deserializedRecord =
         this.depositRecordSchema[key].deserialize(deserializedRecord);
     }
-    if ("id" in record) {
-      if (typeof record.id !== "string") {
-        delete deserializedRecord["id"];
-      }
-    }
+
     this.current_record = deserializedRecord;
     return deserializedRecord;
   }
@@ -90,18 +90,29 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
    */
   deserializeErrors(errors) {
     let deserializedErrors = {};
-    for (let e of errors) {
-      keys = e.field.split(".");
-      if (keys[0] == "metadata") {
+    for (const e of errors) {
+      if (e.field.startsWith("metadata")) {
+        let keys = e.field.split(".");
         if (keys[1] == "fields") {
-          fields = get(this.current_record, "metadata.fields");
-          for (let key in fields) {
+          let fields = _get(this.current_record, "metadata.fields");
+          const field = keys[2];
+          let j = 0;
+          while (j < fields.length) {
+            if (field == fields[j].id) {
+              _set(
+                deserializedErrors,
+                `metadata.fields.${j}.${keys[4]}`,
+                e.messages.join(" ")
+              );
+              break;
+            }
+            j++;
           }
         }
+      } else {
+        _set(deserializedErrors, e.field, e.messages.join(" "));
       }
-      set(deserializedErrors, e.field, e.messages.join(" "));
     }
-
     return deserializedErrors;
   }
 
@@ -113,9 +124,9 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
    *
    */
   serialize(record) {
-    record = cloneDeep(record);
+    record = _cloneDeep(record);
     let serializedRecord = record; //this.removeEmptyValues(record);
-    serializedRecord = pick(serializedRecord, [
+    serializedRecord = _pick(serializedRecord, [
       "access",
       "metadata",
       "id",
@@ -127,13 +138,8 @@ export class Marc21RecordSerializer extends DepositRecordSerializer {
     for (let key in this.depositRecordSchema) {
       serializedRecord = this.depositRecordSchema[key].serialize(serializedRecord);
     }
-    if ("id" in record) {
-      if (typeof record.id !== "string") {
-        delete serializedRecord["id"];
-      }
-    }
 
-    defaults(serializedRecord, { metadata: {} });
+    _defaults(serializedRecord, { metadata: {} });
 
     return serializedRecord;
   }
