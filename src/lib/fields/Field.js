@@ -6,8 +6,9 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
-import { get, set, cloneDeep } from "lodash";
-
+import _get from "lodash/get";
+import _set from "lodash/set";
+import _cloneDeep from "lodash/cloneDeep";
 export class Field {
   constructor({ fieldpath, deserializedDefault = null, serializedDefault = null }) {
     this.fieldpath = fieldpath;
@@ -16,17 +17,17 @@ export class Field {
   }
 
   deserialize(record) {
-    let fieldValue = get(record, this.fieldpath, this.deserializedDefault);
+    let fieldValue = _get(record, this.fieldpath, this.deserializedDefault);
     if (fieldValue !== null) {
-      return set(cloneDeep(record), this.fieldpath, fieldValue);
+      return _set(_cloneDeep(record), this.fieldpath, fieldValue);
     }
     return record;
   }
 
   serialize(record) {
-    let fieldValue = get(record, this.fieldpath, this.serializedDefault);
+    let fieldValue = _get(record, this.fieldpath, this.serializedDefault);
     if (fieldValue !== null) {
-      return set(cloneDeep(record), this.fieldpath, fieldValue);
+      return _set(_cloneDeep(record), this.fieldpath, fieldValue);
     }
     return record;
   }

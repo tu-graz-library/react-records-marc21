@@ -6,7 +6,8 @@
 // modify it under the terms of the MIT License; see LICENSE file for more
 // details.
 
-import { get, has } from "lodash";
+import _get from "lodash/get";
+import _has from "lodash/has";
 import axios from "axios";
 
 export class Marc21RecordSchema {
@@ -62,7 +63,7 @@ export class Marc21RecordSchema {
   }
 
   hasLeaderKey(key) {
-    return has(this.schema, ["fields", this.leader_field, "positions", key]);
+    return _has(this.schema, ["fields", this.leader_field, "positions", key]);
   }
 
   getLeaderFieldKeys() {
@@ -75,7 +76,7 @@ export class Marc21RecordSchema {
   }
 
   getLeaderFields() {
-    return get(this.schema, ["fields", this.leader_field, "positions"], {});
+    return _get(this.schema, ["fields", this.leader_field, "positions"], {});
   }
 
   getLeaderField(key) {
@@ -85,13 +86,13 @@ export class Marc21RecordSchema {
 
   getLeaderFieldOptions(key) {
     const leaderfield = this.getLeaderField(key);
-    const leaderfield_codes = get(leaderfield, ["codes"], {});
+    const leaderfield_codes = _get(leaderfield, ["codes"], {});
     let codes = this.generateDropdownOptions(leaderfield_codes);
     return codes;
   }
 
   getDataFields() {
-    return get(this.schema, ["fields"], {});
+    return _get(this.schema, ["fields"], {});
   }
 
   getDataFieldKeys() {
