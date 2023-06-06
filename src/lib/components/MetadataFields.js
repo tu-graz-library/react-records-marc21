@@ -41,7 +41,7 @@ export class MetadataFields extends Component {
             const fieldPathPrefix = `${fieldPath}.fields.${indexPath}`;
             return (
               <GroupField optimized>
-                <MetadataField fieldPath={fieldPathPrefix} error={fieldsError}  />
+                <MetadataField fieldPath={fieldPathPrefix} error={fieldsError} />
                 <Form.Field width={1}>
                   <Button icon onClick={() => arrayHelpers.remove(indexPath)}>
                     <Icon name="close" />
